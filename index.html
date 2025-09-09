@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UPPER MOST PARTY</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .header-section {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .party-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #667eea;
+      margin: 0 0 10px 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .party-subtitle {
+      color: #666;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+    
+    .total-display {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #28a745;
+      margin: 15px 0;
+      padding: 15px;
+      background: linear-gradient(45deg, #d4edda, #c3e6cb);
+      border-radius: 10px;
+      border: 2px solid #28a745;
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .stat-item {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      border-left: 4px solid #667eea;
+    }
+    
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #667eea;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 5px;
+    }
+    
+    /* Password Section */
+    .password-section {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      border-left: 6px solid #ffc107;
+    }
+    
+    .password-input {
+      padding: 12px 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      width: 200px;
+      margin-right: 10px;
+      transition: border-color 0.3s;
+    }
+    
+    .password-input:focus {
+      border-color: #ffc107;
+      outline: none;
+    }
+    
+    .password-button {
+      background: linear-gradient(45deg, #ffc107, #e0a800);
+      color: #000;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: transform 0.2s;
+    }
+    
+    .password-button:hover {
+      transform: translateY(-2px);
+    }
+    
+    .password-status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    
+    .status-locked {
+      background: #f8d7da;
+      color: #721c24;
+      border: 2px solid #f5c6cb;
+    }
+    
+    .status-unlocked {
+      background: #d4edda;
+      color: #155724;
+      border: 2px solid #c3e6cb;
+    }
+    
+    /* Add Friend Section */
+    .add-friend-section {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      border-left: 6px solid #17a2b8;
+    }
+    
+    .add-friend-input {
+      padding: 12px 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      width: 250px;
+      margin-right: 10px;
+      transition: border-color 0.3s;
+    }
+    
+    .add-friend-input:focus {
+      border-color: #17a2b8;
+      outline: none;
+    }
+    
+    .add-friend-button {
+      background: linear-gradient(45deg, #17a2b8, #138496);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: transform 0.2s;
+    }
+    
+    .add-friend-button:hover {
+      transform: translateY(-2px);
+    }
+    
+    /* Edit Mode Section */
+    .edit-mode {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      border-left: 6px solid #28a745;
+    }
+    
+    .lock-button {
+      background: linear-gradient(45deg, #dc3545, #c82333);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      float: right;
+      transition: transform 0.2s;
+    }
+    
+    .lock-button:hover {
+      transform: translateY(-2px);
+    }
+    
+    .readonly-message {
+      background: linear-gradient(45deg, #e2e3e5, #d6d8db);
+      color: #383d41;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      text-align: center;
+      border: 2px solid #d6d8db;
+    }
+    
+    /* Table Styles */
+    .table-container {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th, td {
+      padding: 15px 10px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+    }
+    
+    th {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    
+    tr:hover {
+      background-color: #f8f9ff;
+      transition: background-color 0.2s;
+    }
+    
+    .paid-row {
+      background: linear-gradient(45deg, #d4edda, #c3e6cb) !important;
+      font-weight: bold;
+    }
+    
+    .paid-row:hover {
+      background: linear-gradient(45deg, #c3e6cb, #b1dfbb) !important;
+    }
+    
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      transform: scale(1.2);
+    }
+    
+    .friend-name {
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .remove-btn {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 5px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-left: 8px;
+      display: none;
+    }
+    
+    .remove-btn:hover {
+      background: #c82333;
+    }
+    
+    tr:hover .remove-btn {
+      display: inline-block;
+    }
+    
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      
+      .party-title {
+        font-size: 2rem;
+      }
+      
+      .total-display {
+        font-size: 1.5rem;
+        padding: 12px;
+      }
+      
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      
+      .stat-number {
+        font-size: 1.2rem;
+      }
+      
+      .password-input, .add-friend-input {
+        width: 180px;
+        margin-bottom: 10px;
+      }
+      
+      .password-button, .add-friend-button {
+        width: 100%;
+        margin-top: 5px;
+      }
+      
+      th, td {
+        padding: 10px 5px;
+        font-size: 0.9rem;
+      }
+      
+      .friend-name {
+        font-size: 0.85rem;
+      }
+      
+      table {
+        font-size: 14px;
+      }
+      
+      /* Hide number column on very small screens */
+      @media (max-width: 480px) {
+        .hide-mobile {
+          display: none;
+        }
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .party-title {
+        font-size: 1.5rem;
+      }
+      
+      .stats {
+        grid-template-columns: 1fr 1fr;
+      }
+      
+      .stat-item {
+        padding: 10px;
+      }
+    }
+    
+    /* Animations */
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .new-row {
+      animation: fadeIn 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header-section">
+      <h1 class="party-title">🎉 UPPER MOST PARTY</h1>
+      <p class="party-subtitle">Track payments for the upcoming party!</p>
+      <div class="total-display">
+        Total Collected: Rs. <span id="totalAmount">0</span>
+      </div>
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-number" id="paidCount">0</div>
+          <div class="stat-label">Paid</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="unpaidCount">0</div>
+          <div class="stat-label">Pending</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="totalFriends">0</div>
+          <div class="stat-label">Total Friends</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" id="completionRate">0%</div>
+          <div class="stat-label">Completion</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Password Section -->
+    <div id="passwordSection" class="password-section">
+      <h3>🔒 Admin Access Required</h3>
+      <div>
+        <input type="password" id="passwordInput" class="password-input" placeholder="Enter admin password..." onkeyup="handlePasswordEnter(event)">
+        <button class="password-button" onclick="checkPassword()">Unlock</button>
+      </div>
+      <div id="passwordStatus" class="password-status status-locked">
+        Admin access required to edit payments and add friends.
+      </div>
+    </div>
+
+    <!-- Add Friend Section -->
+    <div id="addFriendSection" class="add-friend-section" style="display: none;">
+      <h3>👥 Add New Friend</h3>
+      <div>
+        <input type="text" id="friendNameInput" class="add-friend-input" placeholder="Enter friend's name..." onkeyup="handleFriendEnter(event)">
+        <button class="add-friend-button" onclick="addFriend()">Add Friend</button>
+      </div>
+      <p style="color: #666; font-size: 0.9rem; margin-top: 10px;">
+        Enter a friend's name and click "Add Friend" to include them in the payment tracking.
+      </p>
+    </div>
+
+    <!-- Edit Mode Section -->
+    <div id="editModeSection" class="edit-mode" style="display: none;">
+      <button class="lock-button" onclick="lockEditMode()">🔒 Lock Admin Mode</button>
+      <h3>✅ Admin Mode Active</h3>
+      <p>You can now modify payments and add new friends to the list.</p>
+      <div style="clear: both;"></div>
+    </div>
+
+    <!-- Read-only message -->
+    <div id="readonlyMessage" class="readonly-message">
+      <strong>👀 View Only Mode:</strong> Contact admin to modify payments or add new friends.
+    </div>
+
+    <!-- Table -->
+    <div class="table-container">
+      <table id="itemsTable">
+        <thead>
+          <tr>
+            <th class="hide-mobile">#</th>
+            <th>Friend Name</th>
+            <th>Amount</th>
+            <th>Payment Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows auto generate -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // Configuration
+    const CORRECT_PASSWORD = '1234'; // Change this password as needed
+    const itemPrice = 2500;
+    
+    // State variables
+    let isEditModeEnabled = false;
+    let paidItems = new Set(); // Track paid items
+    let friendsList = [
+      "Zoro","Ashan","Chamindu","Dilina","Doka","Sidath",
+      "Gayan","Suraj","Chathuranga","Diver","Lashan",
+      "Loku thaththa","Sandaru","Thushan","Shashika","Udesh",
+      "Shehara","Sumudu"
+    ];
+
+    // Load saved data from browser storage
+    function loadSavedData() {
+      const savedPaid = localStorage.getItem('partyPaidItems');
+      const savedFriends = localStorage.getItem('partyFriendsList');
+      
+      if (savedPaid) {
+        paidItems = new Set(JSON.parse(savedPaid));
+      }
+      
+      if (savedFriends) {
+        friendsList = JSON.parse(savedFriends);
+      }
+    }
+
+    // Save data to browser storage
+    function saveData() {
+      localStorage.setItem('partyPaidItems', JSON.stringify(Array.from(paidItems)));
+      localStorage.setItem('partyFriendsList', JSON.stringify(friendsList));
+    }
+
+    // Generate table rows
+    function generateTable() {
+      const tableBody = document.querySelector("#itemsTable tbody");
+      tableBody.innerHTML = '';
+      
+      friendsList.forEach((name, index) => {
+        const row = document.createElement("tr");
+        const isPaid = paidItems.has(index);
+        
+        if (isPaid) {
+          row.classList.add('paid-row');
+        }
+        
+        row.innerHTML = `
+          <td class="hide-mobile">${index + 1}</td>
+          <td class="friend-name">
+            ${name}
+            ${isEditModeEnabled ? `<button class="remove-btn" onclick="removeFriend(${index})" title="Remove friend">×</button>` : ''}
+          </td>
+          <td>Rs. ${itemPrice.toLocaleString()}</td>
+          <td>
+            <input type="checkbox" 
+                   id="checkbox-${index}" 
+                   ${isPaid ? 'checked' : ''} 
+                   onchange="togglePayment(${index})"
+                   ${!isEditModeEnabled ? 'disabled' : ''}>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+      
+      updateTotalDisplay();
+    }
+
+    // Toggle payment status
+    function togglePayment(index) {
+      if (!isEditModeEnabled) {
+        alert('Admin access required! Enter password first to modify payments.');
+        return;
+      }
+      
+      const checkbox = document.getElementById(`checkbox-${index}`);
+      const row = checkbox.closest('tr');
+      
+      if (checkbox.checked) {
+        paidItems.add(index);
+        row.classList.add('paid-row');
+      } else {
+        paidItems.delete(index);
+        row.classList.remove('paid-row');
+      }
+      
+      updateTotalDisplay();
+      saveData();
+      showQuickMessage(`${friendsList[index]} payment updated! 💰`);
+    }
+
+    // Add new friend
+    function addFriend() {
+      const nameInput = document.getElementById('friendNameInput');
+      const newName = nameInput.value.trim();
+      
+      if (!newName) {
+        alert('Please enter a friend\'s name!');
+        return;
+      }
+      
+      if (friendsList.includes(newName)) {
+        alert('This friend is already in the list!');
+        return;
+      }
+      
+      friendsList.push(newName);
+      nameInput.value = '';
+      generateTable();
+      saveData();
+      showQuickMessage(`${newName} added to party list! 🎉`);
+    }
+
+    // Remove friend
+    function removeFriend(index) {
+      const friendName = friendsList[index];
+      
+      if (confirm(`Remove ${friendName} from the party list?`)) {
+        friendsList.splice(index, 1);
+        
+        // Adjust paid items indices
+        const newPaidItems = new Set();
+        Array.from(paidItems).forEach(paidIndex => {
+          if (paidIndex < index) {
+            newPaidItems.add(paidIndex);
+          } else if (paidIndex > index) {
+            newPaidItems.add(paidIndex - 1);
+          }
+        });
+        paidItems = newPaidItems;
+        
+        generateTable();
+        saveData();
+        showQuickMessage(`${friendName} removed from list! 👋`);
+      }
+    }
+
+    // Handle Enter key for friend input
+    function handleFriendEnter(event) {
+      if (event.key === 'Enter') {
+        addFriend();
+      }
+    }
+
+    // Update total display and stats
+    function updateTotalDisplay() {
+      const totalFriends = friendsList.length;
+      const paidCount = paidItems.size;
+      const unpaidCount = totalFriends - paidCount;
+      const totalAmount = paidCount * itemPrice;
+      const completionRate = totalFriends > 0 ? Math.round((paidCount / totalFriends) * 100) : 0;
+      
+      document.getElementById('totalAmount').textContent = totalAmount.toLocaleString();
+      document.getElementById('paidCount').textContent = paidCount;
+      document.getElementById('unpaidCount').textContent = unpaidCount;
+      document.getElementById('totalFriends').textContent = totalFriends;
+      document.getElementById('completionRate').textContent = completionRate + '%';
+    }
+
+    // Check password
+    function checkPassword() {
+      const inputPassword = document.getElementById('passwordInput').value;
+      const statusDiv = document.getElementById('passwordStatus');
+      
+      if (inputPassword === CORRECT_PASSWORD) {
+        enableEditMode();
+        statusDiv.textContent = 'Password correct! Admin mode enabled.';
+        statusDiv.className = 'password-status status-unlocked';
+        
+        setTimeout(() => {
+          document.getElementById('passwordSection').style.display = 'none';
+          document.getElementById('editModeSection').style.display = 'block';
+          document.getElementById('addFriendSection').style.display = 'block';
+          document.getElementById('readonlyMessage').style.display = 'none';
+        }, 1000);
+      } else {
+        statusDiv.textContent = 'Wrong password! Please try again.';
+        statusDiv.className = 'password-status status-locked';
+        document.getElementById('passwordInput').value = '';
+        
+        // Shake effect
+        document.getElementById('passwordInput').style.animation = 'shake 0.5s';
+        setTimeout(() => {
+          document.getElementById('passwordInput').style.animation = '';
+        }, 500);
+      }
+    }
+
+    // Handle Enter key in password input
+    function handlePasswordEnter(event) {
+      if (event.key === 'Enter') {
+        checkPassword();
+      }
+    }
+
+    // Enable edit mode
+    function enableEditMode() {
+      isEditModeEnabled = true;
+      generateTable();
+    }
+
+    // Lock edit mode
+    function lockEditMode() {
+      isEditModeEnabled = false;
+      
+      document.getElementById('passwordSection').style.display = 'block';
+      document.getElementById('editModeSection').style.display = 'none';
+      document.getElementById('addFriendSection').style.display = 'none';
+      document.getElementById('readonlyMessage').style.display = 'block';
+      
+      // Clear password input
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('passwordStatus').textContent = 'Admin access required to edit payments and add friends.';
+      document.getElementById('passwordStatus').className = 'password-status status-locked';
+      
+      generateTable();
+      showQuickMessage('Admin mode locked! 🔒');
+    }
+
+    // Show quick message
+    function showQuickMessage(message) {
+      const messageDiv = document.createElement('div');
+      messageDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(45deg, #28a745, #20c997);
+        color: white;
+        padding: 12px 18px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        z-index: 1000;
+        animation: slideIn 0.3s ease;
+        font-weight: bold;
+        max-width: 300px;
+        word-wrap: break-word;
+      `;
+      messageDiv.textContent = message;
+      document.body.appendChild(messageDiv);
+      
+      setTimeout(() => {
+        messageDiv.remove();
+      }, 3000);
+    }
+
+    // Initialize the application
+    function initApp() {
+      loadSavedData();
+      generateTable();
+      
+      // Focus on password input
+      setTimeout(() => {
+        document.getElementById('passwordInput')?.focus();
+      }, 500);
+    }
+
+    // Start the application
+    initApp();
+
+    // Auto-save every 30 seconds
+    setInterval(() => {
+      if (friendsList.length > 0) {
+        saveData();
+      }
+    }, 30000);
+  </script>
+</body>
+</html>
